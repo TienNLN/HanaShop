@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 import javax.naming.NamingException;
 import tiennln.cart.CartObject;
-import tiennln.items.ItemsDTO;
+import tiennln.items.PlantDTO;
 import tiennln.util.DBHelper;
 
 /**
@@ -30,7 +30,7 @@ public class OrderDetailsDAO implements Serializable {
             throws NamingException, SQLException {
         Connection cn = null;
         PreparedStatement pst = null;
-        HashMap<ItemsDTO, Integer> cartItems = cart.getCartItem();
+        HashMap<PlantDTO, Integer> cartItems = cart.getCartItem();
 
         try {
             cn = DBHelper.makeConnection();
@@ -41,9 +41,9 @@ public class OrderDetailsDAO implements Serializable {
                 pst = cn.prepareStatement(sqlString);
                 cn.setAutoCommit(false);
 
-                Iterator<Map.Entry<ItemsDTO, Integer>> it = cartItems.entrySet().iterator();
+                Iterator<Map.Entry<PlantDTO, Integer>> it = cartItems.entrySet().iterator();
                 while (it.hasNext()) {
-                    HashMap.Entry<ItemsDTO, Integer> itemTemp = (Map.Entry<ItemsDTO, Integer>) it.next();
+                    HashMap.Entry<PlantDTO, Integer> itemTemp = (Map.Entry<PlantDTO, Integer>) it.next();
 
                     pst.setString(1, orderID);
                     pst.setString(2, itemTemp.getKey().getName());

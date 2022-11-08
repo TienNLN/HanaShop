@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
-import tiennln.items.ItemsDAO;
+import tiennln.items.PlantDAO;
 
 /**
  *
@@ -86,7 +86,7 @@ public class AddItemServlet extends HttpServlet {
                 txtPrice = Float.parseFloat(txtPriceString);
                 txtQuantity = Integer.parseInt(txtQuantityString);
                 
-                ItemsDAO itemDao = new ItemsDAO();
+                PlantDAO itemDao = new PlantDAO();
                 itemDao.addNewItem(txtName, txtImage, txtDescription, txtPrice, txtCategory, txtQuantity);
                 
                 url = "DispatchServlet";

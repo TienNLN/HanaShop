@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import tiennln.items.ItemsDTO;
+import tiennln.items.PlantDTO;
 
 /**
  *
@@ -17,13 +17,13 @@ import tiennln.items.ItemsDTO;
  */
 public class CartObject implements Serializable {
 
-    private HashMap<ItemsDTO, Integer> cartItem = null;
+    private HashMap<PlantDTO, Integer> cartItem = null;
 
     private int size = -1;
     
 //    private float totalMoney;
 
-    public HashMap<ItemsDTO, Integer> getCartItem() {
+    public HashMap<PlantDTO, Integer> getCartItem() {
         return cartItem;
     }
 
@@ -38,16 +38,16 @@ public class CartObject implements Serializable {
         return -1;
     }
 
-    public void addItemIntoCart(ItemsDTO item) {
+    public void addItemIntoCart(PlantDTO item) {
         if (this.cartItem == null) {
             this.cartItem = new HashMap<>();
         }
 
         int quantity = 1;
 
-        Iterator<Map.Entry<ItemsDTO, Integer>> it = cartItem.entrySet().iterator();
+        Iterator<Map.Entry<PlantDTO, Integer>> it = cartItem.entrySet().iterator();
         while (it.hasNext()) {
-            HashMap.Entry<ItemsDTO, Integer> itemTemp = (Map.Entry<ItemsDTO, Integer>) it.next();
+            HashMap.Entry<PlantDTO, Integer> itemTemp = (Map.Entry<PlantDTO, Integer>) it.next();
 
             if (item.getName().equals(itemTemp.getKey().getName())) {
                 quantity = itemTemp.getValue() + 1;
@@ -63,9 +63,9 @@ public class CartObject implements Serializable {
             this.cartItem = new HashMap<>();
         }
 
-        Iterator<Map.Entry<ItemsDTO, Integer>> it = cartItem.entrySet().iterator();
+        Iterator<Map.Entry<PlantDTO, Integer>> it = cartItem.entrySet().iterator();
         while (it.hasNext()) {
-            HashMap.Entry<ItemsDTO, Integer> itemTemp = (Map.Entry<ItemsDTO, Integer>) it.next();
+            HashMap.Entry<PlantDTO, Integer> itemTemp = (Map.Entry<PlantDTO, Integer>) it.next();
 
             if (itemTemp.getKey().getName().equals(name)) {
                 cartItem.remove(itemTemp.getKey());
@@ -82,9 +82,9 @@ public class CartObject implements Serializable {
             this.cartItem = new HashMap<>();
         }
 
-        Iterator<Map.Entry<ItemsDTO, Integer>> it = cartItem.entrySet().iterator();
+        Iterator<Map.Entry<PlantDTO, Integer>> it = cartItem.entrySet().iterator();
         while (it.hasNext()) {
-            HashMap.Entry<ItemsDTO, Integer> itemTemp = (Map.Entry<ItemsDTO, Integer>) it.next();
+            HashMap.Entry<PlantDTO, Integer> itemTemp = (Map.Entry<PlantDTO, Integer>) it.next();
 
             if (itemTemp.getKey().getName().equals(name)) {
                 itemTemp.setValue(quantity);
@@ -101,13 +101,13 @@ public class CartObject implements Serializable {
     }
 
     public float getTotalMoney() {
-        Iterator<Map.Entry<ItemsDTO, Integer>> it = cartItem.entrySet().iterator();
+        Iterator<Map.Entry<PlantDTO, Integer>> it = cartItem.entrySet().iterator();
         float total = -1;
         while (it.hasNext()) {
             if (total == -1) {
                 total = 0;
             }
-            HashMap.Entry<ItemsDTO, Integer> itemTemp = (Map.Entry<ItemsDTO, Integer>) it.next();
+            HashMap.Entry<PlantDTO, Integer> itemTemp = (Map.Entry<PlantDTO, Integer>) it.next();
             total += (itemTemp.getKey().getPrice() * itemTemp.getValue());
         }
         return total;

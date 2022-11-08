@@ -17,10 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
-import tiennln.items.ItemsDAO;
-import tiennln.items.ItemsDTO;
-import tiennln.users.UsersDAO;
-import tiennln.users.UsersDTO;
+import tiennln.items.PlantDAO;
+import tiennln.items.PlantDTO;
+import tiennln.users.AccountDAO;
+import tiennln.users.AccountDTO;
 
 /**
  *
@@ -49,11 +49,11 @@ public class StartUpServlet extends HttpServlet {
         String url = HOME_PAGE;
 
         HttpSession session = null;
-        List<ItemsDTO> itemDTO = null;
+        List<PlantDTO> itemDTO = null;
 
         try {
             session = request.getSession();
-            ItemsDAO itemDao = new ItemsDAO();
+            PlantDAO itemDao = new PlantDAO();
             itemDao.getAllCategory();
 
             List<String> listCategory = itemDao.getListCategory();
@@ -62,29 +62,14 @@ public class StartUpServlet extends HttpServlet {
                 session.setAttribute("LIST_CATEGORY", listCategory);
             }
 
-            String pageNumberAdminString = request.getParameter("pageNumberAdmin");
-            if (pageNumberAdminString != null) {
-                int pageNumber = Integer.parseInt(pageNumberAdminString);
-                itemDTO = itemDao.loadListItems(pageNumber);
-            } else {
-                itemDTO = itemDao.loadListItems(1);
-            }
-
-            int numberOfPageAdmin = itemDao.getNumberOfPage();
-            session.setAttribute("NUMBER_OF_PAGE_ADMIN", numberOfPageAdmin);
-
-            if (!itemDTO.isEmpty()) {
-                session.setAttribute("LIST_ITEMS", itemDTO);
-            }
-
             session = request.getSession(false);
             if (session != null) {
-                UsersDTO user = (UsersDTO) session.getAttribute("LAST_USER");
+                AccountDTO user = (AccountDTO) session.getAttribute("LAST_USER");
                 if (user != null) {
-                    String username = user.getUserID();
+                    String username = user.getEmail();
 
                     String password = user.getPassword();
-                    UsersDAO userDao = new UsersDAO();
+                    AccountDAO userDao = new AccountDAO();
                     if (userDao.checkLogin(username, password) != null) {
                         url = "DispatchServlet"
                                 + "?btnAction=Login"

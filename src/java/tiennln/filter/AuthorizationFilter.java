@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
-import tiennln.users.UsersDTO;
+import tiennln.users.AccountDTO;
 
 /**
  *
@@ -124,12 +124,12 @@ public class AuthorizationFilter implements Filter {
                 res.sendRedirect(LOGIN_PAGE);
             }
 
-            UsersDTO lastUser = (UsersDTO) session.getAttribute("LAST_USER");
+            AccountDTO lastUser = (AccountDTO) session.getAttribute("LAST_USER");
             if (lastUser == null) {
                 res.sendRedirect(LOGIN_PAGE);
             }
             if (lastUser != null) {
-                boolean isAdmin = lastUser.isIsAdmin();
+                boolean isAdmin = lastUser.isRole();
                 if (isAdmin) {
                     chain.doFilter(request, response);
                 } else {

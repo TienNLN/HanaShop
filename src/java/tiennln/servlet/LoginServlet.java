@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import tiennln.users.UsersDAO;
-import tiennln.users.UsersDTO;
+import tiennln.users.AccountDAO;
+import tiennln.users.AccountDTO;
 import org.apache.log4j.Logger;
 
 /**
@@ -63,8 +63,8 @@ public class LoginServlet extends HttpServlet {
                 errFound = true;
             }
             if (!errFound) {
-                UsersDAO dao = new UsersDAO();
-                UsersDTO user = dao.checkLogin(username, password);
+                AccountDAO dao = new AccountDAO();
+                AccountDTO user = dao.checkLogin(username, password);
 
                 if (user != null) {
                     HttpSession session = request.getSession();

@@ -19,10 +19,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import tiennln.cart.CartObject;
-import tiennln.items.ItemsDAO;
+import tiennln.items.PlantDAO;
 import tiennln.orderdetail.OrderDetailsDAO;
 import tiennln.orders.OrdersDAO;
-import tiennln.users.UsersDTO;
+import tiennln.users.AccountDTO;
 
 /**
  *
@@ -54,27 +54,23 @@ public class ConfirmCartServlet extends HttpServlet {
         try {
             HttpSession session = request.getSession(false);
             if (session != null) {
-                UsersDTO user = (UsersDTO) session.getAttribute("LAST_USER");
+                AccountDTO user = (AccountDTO) session.getAttribute("LAST_USER");
                 if (user != null) {
                     CartObject cart = (CartObject) session.getAttribute("CART");
                     if (cart != null) {
-                        String userID = user.getUserID();
+                        String userID = user.getEmail();
 
-                        ItemsDAO itemDAO = new ItemsDAO();
-                        List<String> outOfStorageItemsList = itemDAO.checkOutOfStorageItems(cart);
+                        PlantDAO itemDAO = new PlantDAO();
+//                        List<String> outOfStorageItemsList = itemDAO.checkOutOfStorageItems(cart);
 
-                        if (outOfStorageItemsList.isEmpty()) {
-                            OrdersDAO ordersDAO = new OrdersDAO();
-                            String orderID = ordersDAO.confirmOrder(userID, cart);
-                            
-                            session.setAttribute("ORDER_LOADING", orderID);
+                        OrdersDAO ordersDAO = new OrdersDAO();
+                        String orderID = ordersDAO.confirmOrder(userID, cart);
 
-                            OrderDetailsDAO orderDetailDAO = new OrderDetailsDAO();
-                            orderDetailDAO.addItems(orderID, cart);
-                            url = CHECK_OUT_PAGE;
-                        } else {
-                            request.setAttribute("LIST_ITEM_OUT_STORAGE", outOfStorageItemsList);
-                        }
+                        session.setAttribute("ORDER_LOADING", orderID);
+
+                        OrderDetailsDAO orderDetailDAO = new OrderDetailsDAO();
+                        orderDetailDAO.addItems(orderID, cart);
+                        url = CHECK_OUT_PAGE;
                     }
                 }
             }

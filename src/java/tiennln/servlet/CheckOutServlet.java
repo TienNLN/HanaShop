@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import tiennln.cart.CartObject;
-import tiennln.items.ItemsDAO;
+import tiennln.items.PlantDAO;
 import tiennln.orders.OrdersDAO;
 
 /**
@@ -65,36 +65,14 @@ public class CheckOutServlet extends HttpServlet {
                         OrdersDAO ordersDAO = new OrdersDAO();
                         ordersDAO.setStatusPaid(orderID, txtFullname, txtAddress, txtPhoneNumber);
 
-                        ItemsDAO itemDAO = new ItemsDAO();
-                        itemDAO.updateItemAfterCheckoutBill(cart);
+                        PlantDAO itemDAO = new PlantDAO();
+//                        itemDAO.updateItemAfterCheckoutBill(cart);
                         url = CHECK_OUT_COMPLETE_PAGE;
 
                         session.removeAttribute("CART");
                     }
                 }
-            } else if (payment.equalsIgnoreCase("paypal")) {
-//                HttpSession session = request.getSession(false);
-//
-//                if (session != null) {
-//                    CartObject cart = (CartObject) session.getAttribute("CART");
-//
-//                    if (cart != null) {
-//                        String orderID = (String) session.getAttribute("ORDER_LOADING");
-//
-//                        url = "https://www.sandbox.paypal.com/cgi-bin/webscr?"
-//                        + "business=sb-lhzne4845948@business.example.com"
-//                        + "&cmd=_xclick"
-//                        + "&item_name=" + orderID
-//                        + "&amount=" + totalMoney
-//                        + "&currency_code=USD"
-//                        + "&return=checkOutComplete.html"
-//                        + "&cancel_return=checkOutFail.html";
-//                        
-//                        session.removeAttribute("CART");
-//                    }
-//                }
             }
-
         } catch (NamingException ex) {
             logger.error(ex.getMessage());
         } catch (SQLException ex) {

@@ -32,12 +32,8 @@
         <c:set var="user" value="${sessionScope.LAST_USER}"/>
         <c:set var="lastSearch" value="${requestScope.LAST_SEARCH_VALUE}"/>
         <c:set var="lastCategory" value="${requestScope.LAST_SEARCH_CATEGORY}"/>
-        <c:set var="lastPriceStart" value="${requestScope.LAST_SEARCH_PRICE_START}"/>
-        <c:set var="lastPriceEnd" value="${requestScope.LAST_SEARCH_PRICE_END}"/>
 
         <c:set var="listItems" value="${sessionScope.LIST_ITEMS}"/>
-
-        <c:set var="numberOfPage" value="${sessionScope.NUMBER_OF_PAGE_ADMIN}"/>
 
         <c:set var="listCategory" value="${sessionScope.LIST_CATEGORY}"/>
         <c:set var="cart" value="${sessionScope.CART}"/>
@@ -46,17 +42,13 @@
             <c:param name="btnAction" value="View Cart"></c:param>
             <c:param name="txtLastSearchValue" value="${lastSearch}"></c:param>
             <c:param name="txtLastSearchCategory" value="${lastCategory}"></c:param>
-            <c:param name="txtLastSearchPriceStart" value="${lastPriceStart}"></c:param>
-            <c:param name="txtLastSearchPriceEnd" value="${lastPriceEnd}"></c:param>
         </c:url>
         <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
             <header class="masthead mb-auto">
                 <div class="inner">
                     <h3 class="masthead-brand">Hana Shop - Admin</h3>
                     <nav class="nav nav-masthead justify-content-center">
-                        <a class="nav-link">Welcome, ${user.name}</a>
-
-                        <a class="nav-link" href="DispatchServlet?btnAction=Logout">Logout</a>
+                        <a class="nav-link">Welcome, ${user.fullname}</a>
                     </nav>
                 </div>
             </header>
@@ -107,12 +99,6 @@
                                             <label  for="txtPrice">Item Price: $</label>
                                             <input type="number" name="txtPrice" value="${item.price}" disabled="true" id="txtPrice"/>
                                         </div>
-                                        <!--<br/>-->
-
-                                        <div class="card-text col-12">
-                                            <label  for="txtQuantity">Item Quantity: </label>
-                                            <input type="number" name="txtQuantity" value="${item.quantity}" disabled="true" id="txtQuantity"/>
-                                        </div><br/><br/>
 
                                         <div class="card-text col-12">
                                             <select class="form-control" id="txtCategory" name="txtCategory" disabled="true">

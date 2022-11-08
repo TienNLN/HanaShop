@@ -5,8 +5,8 @@
  */
 package tiennln.servlet;
 
-import tiennln.items.ItemsDAO;
-import tiennln.items.ItemsDTO;
+import tiennln.items.PlantDAO;
+import tiennln.items.PlantDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
-import tiennln.users.UsersDTO;
+import tiennln.users.AccountDTO;
 
 /**
  *
@@ -58,11 +58,9 @@ public class SearchServlet extends HttpServlet {
         HttpSession session = null;
 
         try {
-            ItemsDAO dao = new ItemsDAO();
+            PlantDAO dao = new PlantDAO();
 
             session = request.getSession();
-            int pageNumberUserSearch = dao.getNumberOfPageSearch(searchValue, priceStart, priceEnd, category);
-            session.setAttribute("NUMBER_OF_PAGE_USER", pageNumberUserSearch);
 
             if (pageNumberUserString == null) {
                 dao.searchItems(searchValue, priceStart, priceEnd, category, 1);
@@ -71,7 +69,7 @@ public class SearchServlet extends HttpServlet {
                 dao.searchItems(searchValue, priceStart, priceEnd, category, pageNumberUser);
             }
 
-            List<ItemsDTO> searchResult = dao.getListResult();
+            List<PlantDTO> searchResult = dao.getListResult();
 
             if (searchResult.isEmpty()) {
                 request.setAttribute("NO_SEARCH_RESULT", "No result matched !");
@@ -80,11 +78,9 @@ public class SearchServlet extends HttpServlet {
             }
             request.setAttribute("LAST_SEARCH_VALUE", searchValue);
             request.setAttribute("LAST_SEARCH_CATEGORY", category);
-            request.setAttribute("LAST_SEARCH_PRICE_START", priceStart);
-            request.setAttribute("LAST_SEARCH_PRICE_END", priceEnd);
 
             session = request.getSession(false);
-            UsersDTO user = (UsersDTO) session.getAttribute("LAST_USER");
+            AccountDTO user = (AccountDTO) session.getAttribute("LAST_USER");
             if (user != null) {
                 url = USER_PAGE;
             }

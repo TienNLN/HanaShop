@@ -21,8 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import tiennln.cart.CartObject;
-import tiennln.items.ItemsDAO;
-import tiennln.items.ItemsDTO;
+import tiennln.items.PlantDAO;
+import tiennln.items.PlantDTO;
 
 /**
  *
@@ -61,13 +61,13 @@ public class AddToCartServlet extends HttpServlet {
                 + "&txtPriceEnd=" + lastPriceEnd;
 
         try {
-            ItemsDAO dao = new ItemsDAO();
+            PlantDAO dao = new PlantDAO();
             dao.searchItems(lastSearch, lastPriceStart, lastPriceEnd, lastCategory, 1);
-            List<ItemsDTO> searchResult = dao.getListResult();
+            List<PlantDTO> searchResult = dao.getListResult();
 
-            ItemsDTO item = null;
+            PlantDTO item = null;
 
-            for (ItemsDTO dto : searchResult) {
+            for (PlantDTO dto : searchResult) {
                 if (dto.getName().equals(itemName)) {
                     item = dto;
                     break;
@@ -82,10 +82,10 @@ public class AddToCartServlet extends HttpServlet {
             cart.addItemIntoCart(item);
             session.setAttribute("CART", cart);
 
-            HashMap<ItemsDTO, Integer> listCart = cart.getCartItem();
-            Iterator<Map.Entry<ItemsDTO, Integer>> it = listCart.entrySet().iterator();
+            HashMap<PlantDTO, Integer> listCart = cart.getCartItem();
+            Iterator<Map.Entry<PlantDTO, Integer>> it = listCart.entrySet().iterator();
             while (it.hasNext()) {
-                HashMap.Entry<ItemsDTO, Integer> itemTemp = (Map.Entry<ItemsDTO, Integer>) it.next();
+                HashMap.Entry<PlantDTO, Integer> itemTemp = (Map.Entry<PlantDTO, Integer>) it.next();
             }
 
         } catch (NamingException ex) {
